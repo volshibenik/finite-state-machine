@@ -3,8 +3,15 @@ class FSM {
      * Creates new FSM instance.
      * @param config
      */
-    constructor(config) {}
-
+    constructor(config) {
+			if (!config) {
+				throw new Error('Error') 
+			} else {
+				this.config = config;
+			}
+			
+			
+		}
     /**
      * Returns active state.
      * @returns {String}
