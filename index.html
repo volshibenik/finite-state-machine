@@ -60,25 +60,41 @@
 					console.log(new Error('Error') ); 
 				} else {
 					this.config = config;
+					console.log(this.config);
+					this.state = config['initial'];
+					for (var k in this.config['states']) {
+					//	if ('get_hungry' in k['transitions'])
+						console.log(this.config['states'][k]['transitions']);
+					}
+
 				}
 			}
 			/**
      * Returns active state.
      * @returns {String}
      */
-			getState() {}
+			getState() {
+				return this.state;
+			}
 
 			/**
      * Goes to specified state.
      * @param state
      */
-			changeState(state) {}
+			changeState(state) {
+				if (state in config['states']) {
+					this.state = state;
+				}
+				
+			}
 
 			/**
      * Changes state according to event transition rules.
      * @param event
      */
-			trigger(event) {}
+			trigger(event) {
+				this.state = this.config['states'][this.state]['transitions'][event];
+			}
 
 			/**
      * Resets FSM state to initial.
@@ -114,8 +130,13 @@
 		}
 		
 		
-		const student = new FSM();
+		const student = new FSM(config);
+//		console.log(student.getState());
 		
+	//	student.changeState('hungry');
+	//	console.log(student.getState());
+//		student.trigger('study');
+	//	console.log(student.getState()) //expect(student.getState()).to.equal('busy');
 	</script>
 	
 	

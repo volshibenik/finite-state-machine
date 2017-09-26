@@ -4,36 +4,61 @@ class FSM {
      * @param config
      */
     constructor(config) {
+			
 			if (!config) {
-				throw new Error('Error') 
+				throw new Error('No config provided') 
 			} else {
 				this.config = config;
+				this.state = config['initial'];
 			}
-			
 			
 		}
     /**
      * Returns active state.
      * @returns {String}
      */
-    getState() {}
+    getState() {
+			
+			return this.state;
+			
+		}
 
     /**
      * Goes to specified state.
      * @param state
      */
-    changeState(state) {}
+    changeState(state) {
+			
+			if (state in this.config['states']) {
+				this.state = state;
+			} else {
+				throw new Error('No such state');
+			}
+			
+		}
 
     /**
      * Changes state according to event transition rules.
      * @param event
      */
-    trigger(event) {}
+    trigger(event) {
+			
+			if (event in this.config['states'][this.state]['transitions']) {
+				this.state = this.config['states'][this.state]['transitions'][event];
+			} else {
+				throw new Error('No such event in this state');
+			}
+			
+		}
 
     /**
      * Resets FSM state to initial.
      */
-    reset() {}
+    reset() {
+			
+			this.state = this.config['initial'];
+			
+		}
 
     /**
      * Returns an array of states for which there are specified event transition rules.
@@ -41,7 +66,13 @@ class FSM {
      * @param event
      * @returns {Array}
      */
-    getStates(event) {}
+    getStates(event) {
+			for (var k in this.config['states'])
+			
+			if (!event) {
+				
+			} else if (event in this.config['states'][this.state]['transitions'])
+		}
 
     /**
      * Goes back to previous state.
