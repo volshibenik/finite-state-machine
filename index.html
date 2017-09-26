@@ -10,7 +10,7 @@
 	</style>
 </head>
 <body>
-<!--	<script src="./app.bundle.js"></script> -->
+	<script src="./app.bundle.js"></script> 
 	
 	<script>
 		
@@ -62,11 +62,9 @@
 					this.config = config;
 					console.log(this.config);
 					this.state = config['initial'];
-					for (var k in this.config['states']) {
-					//	if ('get_hungry' in k['transitions'])
-						console.log(this.config['states'][k]['transitions']);
-					}
-
+					this.memo = [];
+					this.undone = [];
+					
 				}
 			}
 			/**
@@ -84,6 +82,8 @@
 			changeState(state) {
 				if (state in config['states']) {
 					this.state = state;
+					this.memo.push(this.state);
+					console.log(this.memo);
 				}
 				
 			}
@@ -107,7 +107,23 @@
      * @param event
      * @returns {Array}
      */
-			getStates(event) {}
+			getStates(event) {
+				var statesArr = [];
+				if (arguments.length ==0) {
+					for (var k in this.config['states']) { 
+						statesArr.push(k);
+					}
+					console.log(arguments.length);
+				} else
+				
+				
+				for (var k in this.config['states']) {
+					if ('get_hungry' in this.config['states'][k]['transitions'])
+						console.log(k);
+				
+				}
+
+			}
 
 			/**
      * Goes back to previous state.
@@ -132,8 +148,9 @@
 		
 		const student = new FSM(config);
 //		console.log(student.getState());
-		
-	//	student.changeState('hungry');
+		student.getStates()
+		student.changeState('hungry');
+		student.changeState('busy');
 	//	console.log(student.getState());
 //		student.trigger('study');
 	//	console.log(student.getState()) //expect(student.getState()).to.equal('busy');
